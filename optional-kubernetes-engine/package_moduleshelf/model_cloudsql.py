@@ -36,8 +36,8 @@ def from_sql(row):
     return data
 
 
-class Book(db.Model):
-    __tablename__ = 'books'
+class package_module(db.Model):
+    __tablename__ = 'package_modules'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
@@ -49,56 +49,56 @@ class Book(db.Model):
     createdById = db.Column(db.String(255))
 
     def __repr__(self):
-        return "<Book(title='%s', author=%s)" % (self.title, self.author)
+        return "<package_module(title='%s', author=%s)" % (self.title, self.author)
 
 
 def list(limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
-    query = (Book.query
-             .order_by(Book.title)
+    query = (package_module.query
+             .order_by(package_module.title)
              .limit(limit)
              .offset(cursor))
-    books = builtin_list(map(from_sql, query.all()))
-    next_page = cursor + limit if len(books) == limit else None
-    return (books, next_page)
+    package_modules = builtin_list(map(from_sql, query.all()))
+    next_page = cursor + limit if len(package_modules) == limit else None
+    return (package_modules, next_page)
 
 
 def list_by_user(user_id, limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
-    query = (Book.query
+    query = (package_module.query
              .filter_by(createdById=user_id)
-             .order_by(Book.title)
+             .order_by(package_module.title)
              .limit(limit)
              .offset(cursor))
-    books = builtin_list(map(from_sql, query.all()))
-    next_page = cursor + limit if len(books) == limit else None
-    return (books, next_page)
+    package_modules = builtin_list(map(from_sql, query.all()))
+    next_page = cursor + limit if len(package_modules) == limit else None
+    return (package_modules, next_page)
 
 
 def read(id):
-    result = Book.query.get(id)
+    result = package_module.query.get(id)
     if not result:
         return None
     return from_sql(result)
 
 
 def create(data):
-    book = Book(**data)
-    db.session.add(book)
+    package_module = package_module(**data)
+    db.session.add(package_module)
     db.session.commit()
-    return from_sql(book)
+    return from_sql(package_module)
 
 
 def update(data, id):
-    book = Book.query.get(id)
+    package_module = package_module.query.get(id)
     for k, v in data.items():
-        setattr(book, k, v)
+        setattr(package_module, k, v)
     db.session.commit()
-    return from_sql(book)
+    return from_sql(package_module)
 
 
 def delete(id):
-    Book.query.filter_by(id=id).delete()
+    package_module.query.filter_by(id=id).delete()
     db.session.commit()
 
 

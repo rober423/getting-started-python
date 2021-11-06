@@ -12,7 +12,7 @@ DIRS = [
     'background/function',
     'gce',
     'sessions',
-    'bookshelf',
+    'package_moduleshelf',
 ]
 
 PYTEST_COMMON_ARGS = ['--junitxml=sponge_log.xml', '-m', 'not e2e']

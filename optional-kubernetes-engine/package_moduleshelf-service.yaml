@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
-# The bookshelf service provides a load-balancing proxy over the bookshelf
+# The package_moduleshelf service provides a load-balancing proxy over the package_moduleshelf
 # frontend pods. By specifying the type as a 'LoadBalancer', Kubernetes Engine
 # will create an external HTTP load balancer.
 # For more information about Services see:
@@ -22,9 +22,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bookshelf-frontend
+  name: package_moduleshelf-frontend
   labels:
-    app: bookshelf
+    app: package_moduleshelf
     tier: frontend
 spec:
   type: LoadBalancer
@@ -32,5 +32,5 @@ spec:
   - port: 80
     targetPort: http-server
   selector:
-    app: bookshelf
+    app: package_moduleshelf
     tier: frontend

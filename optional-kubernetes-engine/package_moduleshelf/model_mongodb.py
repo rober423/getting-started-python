@@ -52,13 +52,13 @@ def init_app(app):
 def list_by_user(user_id, limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
 
-    results = mongo.db.books\
+    results = mongo.db.package_modules\
         .find({'createdById': user_id}, skip=cursor, limit=10)\
         .sort('title')
-    books = builtin_list(map(from_mongo, results))
+    package_modules = builtin_list(map(from_mongo, results))
 
-    next_page = cursor + limit if len(books) == limit else None
-    return (books, next_page)
+    next_page = cursor + limit if len(package_modules) == limit else None
+    return (package_modules, next_page)
 # [END list_by_user]
 
 
@@ -66,34 +66,34 @@ def list_by_user(user_id, limit=10, cursor=None):
 def list(limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
 
-    results = mongo.db.books.find(skip=cursor, limit=10).sort('title')
-    books = builtin_list(map(from_mongo, results))
+    results = mongo.db.package_modules.find(skip=cursor, limit=10).sort('title')
+    package_modules = builtin_list(map(from_mongo, results))
 
-    next_page = cursor + limit if len(books) == limit else None
-    return (books, next_page)
+    next_page = cursor + limit if len(package_modules) == limit else None
+    return (package_modules, next_page)
 # [END list]
 
 
 # [START read]
 def read(id):
-    result = mongo.db.books.find_one({'_id': _id(id)})
+    result = mongo.db.package_modules.find_one({'_id': _id(id)})
     return from_mongo(result)
 # [END read]
 
 
 # [START create]
 def create(data):
-    result = mongo.db.books.insert_one(data)
+    result = mongo.db.package_modules.insert_one(data)
     return read(result.inserted_id)
 # [END create]
 
 
 # [START update]
 def update(data, id):
-    mongo.db.books.replace_one({'_id': _id(id)}, data)
+    mongo.db.package_modules.replace_one({'_id': _id(id)}, data)
     return read(id)
 # [END update]
 
 
 def delete(id):
-    mongo.db.books.delete_one({'_id': _id(id)})
+    mongo.db.package_modules.delete_one({'_id': _id(id)})

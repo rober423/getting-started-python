@@ -65,9 +65,9 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         oauth2.storage.delete()
         return redirect(request.referrer or '/')
 
-    # Register the Bookshelf CRUD blueprint.
+    # Register the package_moduleshelf CRUD blueprint.
     from .crud import crud
-    app.register_blueprint(crud, url_prefix='/books')
+    app.register_blueprint(crud, url_prefix='/package_modules')
 
     # Add a default root route.
     @app.route("/")

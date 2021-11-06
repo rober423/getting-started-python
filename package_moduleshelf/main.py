@@ -65,18 +65,18 @@ if not app.testing:
 @app.route('/')
 def list():
     start_after = request.args.get('start_after', None)
-    books, last_title = firestore.next_page(start_after=start_after)
+    package_modules, last_title = firestore.next_page(start_after=start_after)
 
-    return render_template('list.html', books=books, last_title=last_title)
-
-
-@app.route('/books/<book_id>')
-def view(book_id):
-    book = firestore.read(book_id)
-    return render_template('view.html', book=book)
+    return render_template('list.html', package_modules=package_modules, last_title=last_title)
 
 
-@app.route('/books/add', methods=['GET', 'POST'])
+@app.route('/package_modules/<package_module_id>')
+def view(package_module_id):
+    package_module = firestore.read(package_module_id)
+    return render_template('view.html', package_module=package_module)
+
+
+@app.route('/package_modules/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         data = request.form.to_dict(flat=True)
@@ -87,16 +87,16 @@ def add():
         if image_url:
             data['imageUrl'] = image_url
 
-        book = firestore.create(data)
+        package_module = firestore.create(data)
 
-        return redirect(url_for('.view', book_id=book['id']))
+        return redirect(url_for('.view', package_module_id=package_module['id']))
 
-    return render_template('form.html', action='Add', book={})
+    return render_template('form.html', action='Add', package_module={})
 
 
-@app.route('/books/<book_id>/edit', methods=['GET', 'POST'])
-def edit(book_id):
-    book = firestore.read(book_id)
+@app.route('/package_modules/<package_module_id>/edit', methods=['GET', 'POST'])
+def edit(package_module_id):
+    package_module = firestore.read(package_module_id)
 
     if request.method == 'POST':
         data = request.form.to_dict(flat=True)
@@ -107,16 +107,16 @@ def edit(book_id):
         if image_url:
             data['imageUrl'] = image_url
 
-        book = firestore.update(data, book_id)
+        package_module = firestore.update(data, package_module_id)
 
-        return redirect(url_for('.view', book_id=book['id']))
+        return redirect(url_for('.view', package_module_id=package_module['id']))
 
-    return render_template('form.html', action='Edit', book=book)
+    return render_template('form.html', action='Edit', package_module=package_module)
 
 
-@app.route('/books/<book_id>/delete')
-def delete(book_id):
-    firestore.delete(book_id)
+@app.route('/package_modules/<package_module_id>/delete')
+def delete(package_module_id):
+    firestore.delete(package_module_id)
     return redirect(url_for('.list'))
 
 

@@ -6,7 +6,7 @@ The code for the samples is contained in individual folders in this repository.
 
 Tutorial | Folder
 ---------|-------
-[Getting Started](https://cloud.google.com/python/getting-started/) | [bookshelf](https://github.com/GoogleCloudPlatform/getting-started-python/tree/master/bookshelf)
+[Getting Started](https://cloud.google.com/python/getting-started/) | [package_moduleshelf](https://github.com/GoogleCloudPlatform/getting-started-python/tree/master/package_moduleshelf)
 [Background Processing](https://cloud.google.com/python/getting-started/background-processing) | [background](https://github.com/GoogleCloudPlatform/getting-started-python/tree/master/background)
 [Deploying to Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/docs/quickstarts/deploying-a-language-specific-app) | [in "kubernetes-engine-samples" repo](https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/tree/master/quickstart/python)
 [Deploying to Google Compute Engine](https://cloud.google.com/python/tutorials/getting-started-on-compute-engine) | [gce](https://github.com/GoogleCloudPlatform/getting-started-python/tree/master/gce)

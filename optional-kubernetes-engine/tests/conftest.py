@@ -14,7 +14,7 @@
 
 """conftest.py is used to define common test fixtures for pytest."""
 
-import bookshelf
+import package_moduleshelf
 import config
 from google.cloud.exceptions import ServiceUnavailable
 from oauth2client.client import HttpAccessTokenRefreshError
@@ -32,7 +32,7 @@ def app(request):
 
     It also ensures the tests run within a request context, allowing
     any calls to flask.request, flask.current_app, etc. to work."""
-    app = bookshelf.create_app(
+    app = package_moduleshelf.create_app(
         config,
         testing=True,
         config_overrides={
@@ -57,16 +57,16 @@ def model(monkeypatch, app):
     The app fixture is needed to provide the configuration and context needed
     to get the proper model object.
     """
-    model = bookshelf.get_model()
+    model = package_moduleshelf.get_model()
 
-    # Ensure no books exist before running. This typically helps if tests
+    # Ensure no package_modules exist before running. This typically helps if tests
     # somehow left the database in a bad state.
-    delete_all_books(model)
+    delete_all_package_modules(model)
 
     yield model
 
-    # Delete all books that we created during tests.
-    delete_all_books(model)
+    # Delete all package_modules that we created during tests.
+    delete_all_package_modules(model)
 
 
 # The backend data stores can sometimes be flaky. It's useful to retry this
@@ -75,13 +75,13 @@ def model(monkeypatch, app):
     stop_max_attempt_number=3,
     wait_exponential_multiplier=100,
     wait_exponential_max=2000)
-def delete_all_books(model):
+def delete_all_package_modules(model):
     while True:
-        books, _ = model.list(limit=50)
-        if not books:
+        package_modules, _ = model.list(limit=50)
+        if not package_modules:
             break
-        for book in books:
-            model.delete(book['id'])
+        for package_module in package_modules:
+            model.delete(package_module['id'])
 
 
 def flaky_filter(info, *args):

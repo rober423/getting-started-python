@@ -33,7 +33,7 @@ class TestStorage(object):
 
     def test_upload_image(self, app):
         data = {
-            'title': 'Test Book',
+            'title': 'Test package_module',
             'author': 'Test Author',
             'publishedDate': 'Test Date Published',
             'description': 'Test Description',
@@ -41,7 +41,7 @@ class TestStorage(object):
         }
 
         with app.test_client() as c:
-            rv = c.post('/books/add', data=data, follow_redirects=True)
+            rv = c.post('/package_modules/add', data=data, follow_redirects=True)
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
@@ -55,7 +55,7 @@ class TestStorage(object):
 
     def test_upload_bad_file(self, app):
         data = {
-            'title': 'Test Book',
+            'title': 'Test package_module',
             'author': 'Test Author',
             'publishedDate': 'Test Date Published',
             'description': 'Test Description',
@@ -64,7 +64,7 @@ class TestStorage(object):
         }
 
         with app.test_client() as c:
-            rv = c.post('/books/add', data=data, follow_redirects=True)
+            rv = c.post('/package_modules/add', data=data, follow_redirects=True)
 
         # check we weren't pwned
         assert rv.status == '400 BAD REQUEST'

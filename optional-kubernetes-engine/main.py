@@ -12,22 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import bookshelf
+import package_moduleshelf
 import config
 
 
 # Note: debug=True is enabled here to help with troubleshooting. You should
 # remove this in production.
-app = bookshelf.create_app(config, debug=True)
+app = package_moduleshelf.create_app(config, debug=True)
 
 
 # Make the queue available at the top-level, this allows you to run
-# `psqworker main.books_queue`. We have to use the app's context because
+# `psqworker main.package_modules_queue`. We have to use the app's context because
 # it contains all the configuration for plugins.
 # If you were using another task queue, such as celery or rq, you can use this
 # section to configure your queues to work with Flask.
 with app.app_context():
-    books_queue = bookshelf.tasks.get_books_queue()
+    package_modules_queue = package_moduleshelf.tasks.get_package_modules_queue()
 
 
 # This is only used when running locally. When running live, gunicorn runs

@@ -14,7 +14,7 @@
 
 import contextlib
 
-import bookshelf
+import package_moduleshelf
 from conftest import flaky_filter
 from flaky import flaky
 import mock
@@ -62,7 +62,7 @@ def client_with_credentials(app):
 class TestAuth(object):
     def test_not_logged_in(self, app):
         with app.test_client() as c:
-            rv = c.get('/books/')
+            rv = c.get('/package_modules/')
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
@@ -70,7 +70,7 @@ class TestAuth(object):
 
     def test_logged_in(self, client_with_credentials):
         with client_with_credentials() as c:
-            rv = c.get('/books/')
+            rv = c.get('/package_modules/')
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
@@ -78,52 +78,52 @@ class TestAuth(object):
 
     def test_add_anonymous(self, app):
         data = {
-            'title': 'Test Book',
+            'title': 'Test package_module',
         }
 
         with app.test_client() as c:
-            rv = c.post('/books/add', data=data, follow_redirects=True)
+            rv = c.post('/package_modules/add', data=data, follow_redirects=True)
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
-        assert 'Test Book' in body
+        assert 'Test package_module' in body
         assert 'Added by Anonymous' in body
 
     def test_add_logged_in(self, client_with_credentials):
         data = {
-            'title': 'Test Book',
+            'title': 'Test package_module',
         }
 
         with client_with_credentials() as c:
-            rv = c.post('/books/add', data=data, follow_redirects=True)
+            rv = c.post('/package_modules/add', data=data, follow_redirects=True)
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
-        assert 'Test Book' in body
+        assert 'Test package_module' in body
         assert 'Added by Test User' in body
 
     def test_mine(self, model, client_with_credentials):
-        # Create two books, one created by the logged in user and one
+        # Create two package_modules, one created by the logged in user and one
         # created by another user.
         model.create({
-            'title': 'Book 1',
+            'title': 'package_module 1',
             'createdById': 'abc@example.com'
         })
 
         model.create({
-            'title': 'Book 2',
+            'title': 'package_module 2',
             'createdById': 'def@example.com'
         })
 
-        # Check the "My Books" page and make sure only one of the books
+        # Check the "My package_modules" page and make sure only one of the package_modules
         # appears.
         with client_with_credentials() as c:
-            rv = c.get('/books/mine')
+            rv = c.get('/package_modules/mine')
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
-        assert 'Book 1' in body
-        assert 'Book 2' not in body
+        assert 'package_module 1' in body
+        assert 'package_module 2' not in body
 
     @mock.patch("httplib2.Http")
     def test_request_user_info(self, HttpMock):
@@ -133,4 +133,4 @@ class TestAuth(object):
             return_value=(responseMock, b'{"name": "bill"}'))
         HttpMock.return_value = httpObj
         credentials = mock.MagicMock()
-        bookshelf._request_user_info(credentials)
+        package_moduleshelf._request_user_info(credentials)

@@ -18,28 +18,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>{{action}} book</h3>
+<h3>{{action}} package_module</h3>
 
 <form method="POST" enctype="multipart/form-data">
 
   <div class="form-group">
     <label for="title">Title</label>
-    <input type="text" name="title" id="title" value="{{book.title}}" class="form-control"/>
+    <input type="text" name="title" id="title" value="{{package_module.title}}" class="form-control"/>
   </div>
 
   <div class="form-group">
     <label for="author">Author</label>
-    <input type="text" name="author" id="author" value="{{book.author}}" class="form-control"/>
+    <input type="text" name="author" id="author" value="{{package_module.author}}" class="form-control"/>
   </div>
 
   <div class="form-group">
     <label for="publishedDate">Date Published</label>
-    <input type="text" name="publishedDate" id="publishedDate" value="{{book.publishedDate}}" class="form-control"/>
+    <input type="text" name="publishedDate" id="publishedDate" value="{{package_module.publishedDate}}" class="form-control"/>
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea name="description" id="description" class="form-control">{{book.description}}</textarea>
+    <textarea name="description" id="description" class="form-control">{{package_module.description}}</textarea>
   </div>
 
   <div class="form-group">
@@ -49,7 +49,7 @@
 
   <div class="form-group hidden">
     <label for="imageUrl">Cover Image URL</label>
-    <input type="text" name="imageUrl" id="imageUrl" value="{{book.imageUrl}}" class="form-control"/>
+    <input type="text" name="imageUrl" id="imageUrl" value="{{package_module.imageUrl}}" class="form-control"/>
   </div>
 
   <button type="submit" class="btn btn-success">Save</button>

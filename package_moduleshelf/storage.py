@@ -55,7 +55,7 @@ def upload_file(file_stream, filename, content_type):
     bucketname = os.getenv('GOOGLE_STORAGE_BUCKET') or os.getenv(
         'GOOGLE_CLOUD_PROJECT') + '_bucket'
 
-    # [START bookshelf_cloud_storage_client]
+    # [START package_moduleshelf_cloud_storage_client]
     client = storage.Client()
     bucket = client.bucket(bucketname)
     blob = bucket.blob(filename)
@@ -67,7 +67,7 @@ def upload_file(file_stream, filename, content_type):
     blob.make_public()
 
     url = blob.public_url
-    # [END bookshelf_cloud_storage_client]
+    # [END package_moduleshelf_cloud_storage_client]
 
     if isinstance(url, six.binary_type):
         url = url.decode('utf-8')

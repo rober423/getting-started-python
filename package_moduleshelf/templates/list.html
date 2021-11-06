@@ -1,5 +1,5 @@
 {#
-# Copyright 2015 Google Inc.
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,36 +18,42 @@
 
 {% block content %}
 
-<h3>Books</h3>
-<a href="/books/add" class="btn btn-success btn-sm">
+{% with messages = get_flashed_messages() %}
+  {% for message in messages %}
+    <p>{{ message }}<p>
+  {% endfor %}
+{% endwith %}
+
+<h3>package_modules</h3>
+<a href="/package_modules/add" class="btn btn-success btn-sm">
   <i class="glyphicon glyphicon-plus"></i>
-  Add book
+  Add package_module
 </a>
 
-{% for book in books %}
+{% for package_module in package_modules %}
 <div class="media">
-  <a href="/books/{{book.id}}">
+  <a href="/package_modules/{{package_module.id}}">
     <div class="media-left">
-      {% if book.imageUrl %}
-        <img src="{{book.imageUrl}}">
+      {% if package_module.imageUrl %}
+        <img src="{{package_module.imageUrl}}">
       {% else %}
         <img src="https://placekitten.com/g/128/192">
       {% endif %}
     </div>
     <div class="media-body">
-      <h4>{{book.title}}</h4>
-      <p>{{book.author}}</p>
+      <h4>{{package_module.title}}</h4>
+      <p>{{package_module.author}}</p>
     </div>
   </a>
 </div>
 {% else %}
-<p>No books found</p>
+<p>No package_modules found</p>
 {% endfor %}
 
-{% if next_page_token %}
+{% if last_title %}
 <nav>
   <ul class="pager">
-    <li><a href="?page_token={{next_page_token}}">More</a></li>
+    <li><a href="?start_after={{last_title}}">More</a></li>
   </ul>
 </nav>
 {% endif %}

@@ -49,28 +49,28 @@ def firestore():
     this to ensure that resources are properly cleaned up.
     """
 
-    # Ensure no books exist before running the tests. This typically helps if
+    # Ensure no package_modules exist before running the tests. This typically helps if
     # tests somehow left the database in a bad state.
-    delete_all_books(firestore)
+    delete_all_package_modules(firestore)
 
     yield firestore
 
-    # Delete all books that we created during tests.
-    delete_all_books(firestore)
+    # Delete all package_modules that we created during tests.
+    delete_all_package_modules(firestore)
 
 
-def delete_all_books(firestore):
+def delete_all_package_modules(firestore):
     while True:
-        books, _ = firestore.next_page(limit=50)
-        if not books:
+        package_modules, _ = firestore.next_page(limit=50)
+        if not package_modules:
             break
-        for book in books:
-            firestore.delete(book['id'])
+        for package_module in package_modules:
+            firestore.delete(package_module['id'])
 
 
 def test_list(app, firestore):
     for i in range(1, 12):
-        firestore.create({'title': u'Book {0}'.format(i)})
+        firestore.create({'title': u'package_module {0}'.format(i)})
 
     with app.test_client() as c:
         rv = c.get('/')
@@ -78,26 +78,26 @@ def test_list(app, firestore):
     assert rv.status == '200 OK'
 
     body = rv.data.decode('utf-8')
-    assert 'Book 1' in body, "Should show books"
-    assert len(re.findall('<h4>Book', body)) <= 10, (
-        "Should not show more than 10 books")
+    assert 'package_module 1' in body, "Should show package_modules"
+    assert len(re.findall('<h4>package_module', body)) <= 10, (
+        "Should not show more than 10 package_modules")
     assert 'More' in body, "Should have more than one page"
 
 
 def test_add(app):
     data = {
-        'title': 'Test Book',
+        'title': 'Test package_module',
         'author': 'Test Author',
         'publishedDate': 'Test Date Published',
         'description': 'Test Description'
     }
 
     with app.test_client() as c:
-        rv = c.post('books/add', data=data, follow_redirects=True)
+        rv = c.post('package_modules/add', data=data, follow_redirects=True)
 
     assert rv.status == '200 OK'
     body = rv.data.decode('utf-8')
-    assert 'Test Book' in body
+    assert 'Test package_module' in body
     assert 'Test Author' in body
     assert 'Test Date Published' in body
     assert 'Test Description' in body
@@ -108,7 +108,7 @@ def test_edit(app, firestore):
 
     with app.test_client() as c:
         rv = c.post(
-            'books/%s/edit' % existing['id'],
+            'package_modules/%s/edit' % existing['id'],
             data={'title': 'Updated Title'},
             follow_redirects=True)
 
@@ -123,7 +123,7 @@ def test_delete(app, firestore):
 
     with app.test_client() as c:
         rv = c.get(
-            'books/%s/delete' % existing['id'],
+            'package_modules/%s/delete' % existing['id'],
             follow_redirects=True)
 
     assert rv.status == '200 OK'
@@ -132,7 +132,7 @@ def test_delete(app, firestore):
 
 def test_upload_image(app):
     data = {
-        'title': 'Test Book',
+        'title': 'Test package_module',
         'author': 'Test Author',
         'publishedDate': 'Test Date Published',
         'description': 'Test Description',
@@ -140,7 +140,7 @@ def test_upload_image(app):
     }
 
     with app.test_client() as c:
-        rv = c.post('books/add', data=data, follow_redirects=True)
+        rv = c.post('package_modules/add', data=data, follow_redirects=True)
 
     assert rv.status == '200 OK'
     body = rv.data.decode('utf-8')
@@ -154,7 +154,7 @@ def test_upload_image(app):
 
 def test_upload_bad_file(app):
     data = {
-        'title': 'Test Book',
+        'title': 'Test package_module',
         'author': 'Test Author',
         'publishedDate': 'Test Date Published',
         'description': 'Test Description',
@@ -163,7 +163,7 @@ def test_upload_bad_file(app):
     }
 
     with app.test_client() as c:
-        rv = c.post('/books/add', data=data, follow_redirects=True)
+        rv = c.post('/package_modules/add', data=data, follow_redirects=True)
 
     # check we weren't pwned
     assert rv.status == '400 BAD REQUEST'
