@@ -65,9 +65,9 @@ if not app.testing:
 @app.route('/')
 def list():
     start_after = request.args.get('start_after', None)
-    package_modules, last_title = firestore.next_page(start_after=start_after)
+    package_modules, last_name = firestore.next_page(start_after=start_after)
 
-    return render_template('list.html', package_modules=package_modules, last_title=last_title)
+    return render_template('list.html', package_modules=package_modules, last_name=last_name)
 
 
 @app.route('/package_modules/<package_module_id>')

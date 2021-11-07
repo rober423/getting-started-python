@@ -52,21 +52,21 @@ def process_package_module(package_module_id):
         logging.warn("Could not find package_module with id {}".format(package_module_id))
         return
 
-    if 'title' not in package_module:
-        logging.warn("Can't process package_module id {} without a title."
+    if 'name' not in package_module:
+        logging.warn("Can't process package_module id {} without a name."
                      .format(package_module_id))
         return
 
-    logging.info("Looking up package_module with title {}".format(package_module[
-                                                        'title']))
+    logging.info("Looking up package_module with name {}".format(package_module[
+                                                        'name']))
 
-    new_package_module_data = query_package_modules_api(package_module['title'])
+    new_package_module_data = query_package_modules_api(package_module['name'])
 
     if not new_package_module_data:
         return
 
-    package_module['title'] = new_package_module_data.get('title')
-    package_module['author'] = ', '.join(new_package_module_data.get('authors', []))
+    package_module['name'] = new_package_module_data.get('name')
+    package_module['user'] = ', '.join(new_package_module_data.get('users', []))
     package_module['publishedDate'] = new_package_module_data.get('publishedDate')
     package_module['description'] = new_package_module_data.get('description')
 
@@ -77,18 +77,18 @@ def process_package_module(package_module_id):
         new_img_src = new_package_module_data['imageLinks']['smallThumbnail']
         package_module['imageUrl'] = download_and_upload_image(
             new_img_src,
-            "{}.jpg".format(package_module['title']))
+            "{}.jpg".format(package_module['name']))
 
     model.update(package_module, package_module_id)
 
 
-def query_package_modules_api(title):
+def query_package_modules_api(name):
     """
     Queries the Google package_modules API to find detailed information about the package_module
-    with the given title.
+    with the given name.
     """
     r = requests.get('https://www.googleapis.com/package_modules/v1/volumes', params={
-        'q': title
+        'q': name
     })
 
     try:
@@ -96,7 +96,7 @@ def query_package_modules_api(title):
         return data
 
     except KeyError:
-        logging.info("No package_module found for title {}".format(title))
+        logging.info("No package_module found for name {}".format(name))
         return None
 
     except ValueError:

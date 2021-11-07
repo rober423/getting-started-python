@@ -40,11 +40,11 @@
     {% endif %}
   </div>
   <div class="media-body">
-    <h4 class="package_module-title">
-      {{package_module.title}}
+    <h4 class="package_module-name">
+      {{package_module.name}}
       <small>{{package_module.publishedDate}}</small>
     </h4>
-    <h5 class="package_module-author">By {{package_module.author|default('Unknown', True)}}</h5>
+    <h5 class="package_module-user">By {{package_module.user|default('Unknown', True)}}</h5>
     <p class="package_module-description">{{package_module.description}}</p>
     <small class="package_module-added-by">Added by {{package_module.createdBy|default('Anonymous', True)}}</small>
   </div>

@@ -41,8 +41,8 @@
       {% endif %}
     </div>
     <div class="media-body">
-      <h4>{{package_module.title}}</h4>
-      <p>{{package_module.author}}</p>
+      <h4>{{package_module.name}}</h4>
+      <p>{{package_module.user}}</p>
     </div>
   </a>
 </div>
@@ -50,10 +50,10 @@
 <p>No package_modules found</p>
 {% endfor %}
 
-{% if last_title %}
+{% if last_name %}
 <nav>
   <ul class="pager">
-    <li><a href="?start_after={{last_title}}">More</a></li>
+    <li><a href="?start_after={{last_name}}">More</a></li>
   </ul>
 </nav>
 {% endif %}

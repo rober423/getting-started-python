@@ -33,8 +33,8 @@ class TestStorage(object):
 
     def test_upload_image(self, app):
         data = {
-            'title': 'Test package_module',
-            'author': 'Test Author',
+            'name': 'Test package_module',
+            'user': 'Test user',
             'publishedDate': 'Test Date Published',
             'description': 'Test Description',
             'image': (BytesIO(b'hello world'), 'hello.jpg')
@@ -55,8 +55,8 @@ class TestStorage(object):
 
     def test_upload_bad_file(self, app):
         data = {
-            'title': 'Test package_module',
-            'author': 'Test Author',
+            'name': 'Test package_module',
+            'user': 'Test user',
             'publishedDate': 'Test Date Published',
             'description': 'Test Description',
             'image': (BytesIO(b'<?php phpinfo(); ?>'),

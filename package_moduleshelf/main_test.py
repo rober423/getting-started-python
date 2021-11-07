@@ -70,7 +70,7 @@ def delete_all_package_modules(firestore):
 
 def test_list(app, firestore):
     for i in range(1, 12):
-        firestore.create({'title': u'package_module {0}'.format(i)})
+        firestore.create({'name': u'package_module {0}'.format(i)})
 
     with app.test_client() as c:
         rv = c.get('/')
@@ -86,8 +86,8 @@ def test_list(app, firestore):
 
 def test_add(app):
     data = {
-        'title': 'Test package_module',
-        'author': 'Test Author',
+        'name': 'Test package_module',
+        'user': 'Test user',
         'publishedDate': 'Test Date Published',
         'description': 'Test Description'
     }
@@ -98,28 +98,28 @@ def test_add(app):
     assert rv.status == '200 OK'
     body = rv.data.decode('utf-8')
     assert 'Test package_module' in body
-    assert 'Test Author' in body
+    assert 'Test user' in body
     assert 'Test Date Published' in body
     assert 'Test Description' in body
 
 
 def test_edit(app, firestore):
-    existing = firestore.create({'title': "Temp Title"})
+    existing = firestore.create({'name': "Temp name"})
 
     with app.test_client() as c:
         rv = c.post(
             'package_modules/%s/edit' % existing['id'],
-            data={'title': 'Updated Title'},
+            data={'name': 'Updated name'},
             follow_redirects=True)
 
     assert rv.status == '200 OK'
     body = rv.data.decode('utf-8')
-    assert 'Updated Title' in body
-    assert 'Temp Title' not in body
+    assert 'Updated name' in body
+    assert 'Temp name' not in body
 
 
 def test_delete(app, firestore):
-    existing = firestore.create({'title': "Temp Title"})
+    existing = firestore.create({'name': "Temp name"})
 
     with app.test_client() as c:
         rv = c.get(
@@ -132,8 +132,8 @@ def test_delete(app, firestore):
 
 def test_upload_image(app):
     data = {
-        'title': 'Test package_module',
-        'author': 'Test Author',
+        'name': 'Test package_module',
+        'user': 'Test user',
         'publishedDate': 'Test Date Published',
         'description': 'Test Description',
         'image': (BytesIO(b'hello world'), 'hello.jpg')
@@ -154,8 +154,8 @@ def test_upload_image(app):
 
 def test_upload_bad_file(app):
     data = {
-        'title': 'Test package_module',
-        'author': 'Test Author',
+        'name': 'Test package_module',
+        'user': 'Test user',
         'publishedDate': 'Test Date Published',
         'description': 'Test Description',
         'image': (BytesIO(b'<?php phpinfo(); ?>'),

@@ -54,7 +54,7 @@ def list_by_user(user_id, limit=10, cursor=None):
 
     results = mongo.db.package_modules\
         .find({'createdById': user_id}, skip=cursor, limit=10)\
-        .sort('title')
+        .sort('name')
     package_modules = builtin_list(map(from_mongo, results))
 
     next_page = cursor + limit if len(package_modules) == limit else None
@@ -66,7 +66,7 @@ def list_by_user(user_id, limit=10, cursor=None):
 def list(limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
 
-    results = mongo.db.package_modules.find(skip=cursor, limit=10).sort('title')
+    results = mongo.db.package_modules.find(skip=cursor, limit=10).sort('name')
     package_modules = builtin_list(map(from_mongo, results))
 
     next_page = cursor + limit if len(package_modules) == limit else None

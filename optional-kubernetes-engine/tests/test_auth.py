@@ -78,7 +78,7 @@ class TestAuth(object):
 
     def test_add_anonymous(self, app):
         data = {
-            'title': 'Test package_module',
+            'name': 'Test package_module',
         }
 
         with app.test_client() as c:
@@ -91,7 +91,7 @@ class TestAuth(object):
 
     def test_add_logged_in(self, client_with_credentials):
         data = {
-            'title': 'Test package_module',
+            'name': 'Test package_module',
         }
 
         with client_with_credentials() as c:
@@ -106,12 +106,12 @@ class TestAuth(object):
         # Create two package_modules, one created by the logged in user and one
         # created by another user.
         model.create({
-            'title': 'package_module 1',
+            'name': 'package_module 1',
             'createdById': 'abc@example.com'
         })
 
         model.create({
-            'title': 'package_module 2',
+            'name': 'package_module 2',
             'createdById': 'def@example.com'
         })
 

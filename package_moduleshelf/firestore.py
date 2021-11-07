@@ -28,20 +28,20 @@ def document_to_dict(doc):
 def next_page(limit=10, start_after=None):
     db = firestore.Client()
 
-    query = db.collection(u'package_module').limit(limit).order_by(u'title')
+    query = db.collection(u'package_module').limit(limit).order_by(u'name')
 
     if start_after:
         # Construct a new query starting at this document.
-        query = query.start_after({u'title': start_after})
+        query = query.start_after({u'name': start_after})
 
     docs = query.stream()
     docs = list(map(document_to_dict, docs))
 
-    last_title = None
+    last_name = None
     if limit == len(docs):
-        # Get the last document from the results and set as the last title.
-        last_title = docs[-1][u'title']
-    return docs, last_title
+        # Get the last document from the results and set as the last name.
+        last_name = docs[-1][u'name']
+    return docs, last_name
 
 
 def read(package_module_id):

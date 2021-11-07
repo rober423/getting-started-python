@@ -41,7 +41,7 @@ def test_end_to_end():
     base_url = os.environ.get('E2E_URL', 'http://localhost:8080')
 
     package_module_data = {
-        'title': 'a confederacy of dunces',
+        'name': 'a confederacy of dunces',
     }
 
     response = requests.post(base_url + '/package_modules/add', data=package_module_data)
@@ -60,11 +60,11 @@ def test_end_to_end():
 
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        title = soup.find('h4', 'package_module-title').contents[0].strip()
-        assert re.search(r'A Confederacy of Dunces', title, re.I)
+        name = soup.find('h4', 'package_module-name').contents[0].strip()
+        assert re.search(r'A Confederacy of Dunces', name, re.I)
 
-        author = soup.find('h5', 'package_module-author').string
-        assert re.search(r'John Kennedy Toole', author, re.I)
+        user = soup.find('h5', 'package_module-user').string
+        assert re.search(r'John Kennedy Toole', user, re.I)
 
         description = soup.find('p', 'package_module-description').string
         assert re.search(r'Ignatius', description, re.I)

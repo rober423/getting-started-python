@@ -40,8 +40,8 @@ class package_module(db.Model):
     __tablename__ = 'package_modules'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
-    author = db.Column(db.String(255))
+    name = db.Column(db.String(255))
+    user = db.Column(db.String(255))
     publishedDate = db.Column(db.String(255))
     imageUrl = db.Column(db.String(255))
     description = db.Column(db.String(4096))
@@ -49,13 +49,13 @@ class package_module(db.Model):
     createdById = db.Column(db.String(255))
 
     def __repr__(self):
-        return "<package_module(title='%s', author=%s)" % (self.title, self.author)
+        return "<package_module(name='%s', user=%s)" % (self.name, self.user)
 
 
 def list(limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = (package_module.query
-             .order_by(package_module.title)
+             .order_by(package_module.name)
              .limit(limit)
              .offset(cursor))
     package_modules = builtin_list(map(from_sql, query.all()))
@@ -67,7 +67,7 @@ def list_by_user(user_id, limit=10, cursor=None):
     cursor = int(cursor) if cursor else 0
     query = (package_module.query
              .filter_by(createdById=user_id)
-             .order_by(package_module.title)
+             .order_by(package_module.name)
              .limit(limit)
              .offset(cursor))
     package_modules = builtin_list(map(from_sql, query.all()))

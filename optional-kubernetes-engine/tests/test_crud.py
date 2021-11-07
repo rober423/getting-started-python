@@ -31,7 +31,7 @@ class TestCrudActions(object):
 
     def test_list(self, app, model):
         for i in range(1, 12):
-            model.create({'title': u'package_module {0}'.format(i)})
+            model.create({'name': u'package_module {0}'.format(i)})
 
         with app.test_client() as c:
             rv = c.get('/package_modules/')
@@ -46,8 +46,8 @@ class TestCrudActions(object):
 
     def test_add(self, app):
         data = {
-            'title': 'Test package_module',
-            'author': 'Test Author',
+            'name': 'Test package_module',
+            'user': 'Test user',
             'publishedDate': 'Test Date Published',
             'description': 'Test Description'
         }
@@ -58,26 +58,26 @@ class TestCrudActions(object):
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
         assert 'Test package_module' in body
-        assert 'Test Author' in body
+        assert 'Test user' in body
         assert 'Test Date Published' in body
         assert 'Test Description' in body
 
     def test_edit(self, app, model):
-        existing = model.create({'title': "Temp Title"})
+        existing = model.create({'name': "Temp name"})
 
         with app.test_client() as c:
             rv = c.post(
                 '/package_modules/%s/edit' % existing['id'],
-                data={'title': 'Updated Title'},
+                data={'name': 'Updated name'},
                 follow_redirects=True)
 
         assert rv.status == '200 OK'
         body = rv.data.decode('utf-8')
-        assert 'Updated Title' in body
-        assert 'Temp Title' not in body
+        assert 'Updated name' in body
+        assert 'Temp name' not in body
 
     def test_delete(self, app, model):
-        existing = model.create({'title': "Temp Title"})
+        existing = model.create({'name': "Temp name"})
 
         with app.test_client() as c:
             rv = c.get(
