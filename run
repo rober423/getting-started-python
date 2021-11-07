@@ -1,0 +1,34 @@
+
+if [[ "$1" == "install" ]]; 
+then
+  python3 -m venv venv
+  echo "Created Virtual Environment"
+  
+  source venv/bin/activate
+  echo "Installing Dependencies"
+  venv/bin/pip install --upgrade pip
+  curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-361.0.0-linux-x86_64.tar.gz
+  tar -xf google-cloud-sdk-361.0.0-linux-x86_64.tar.gz
+  ./google-cloud-sdk/install.sh -q
+  ./google-cloud-sdk/bin/gcloud config set compute/zone us-east1-c
+  
+  ./google-cloud-sdk/bin/gcloud init
+  venv/bin/pip install --upgrade google-cloud-storage
+  venv/bin/pip install google-cloud-container
+  venv/bin/pip install pylint
+  venv/bin/pip install -r requirements.txt
+  venv/bin/pip freeze > requirements.txt
+
+  echo "Dependencies Installed"
+  deactivate
+elif [[ "$1" == "pylint" ]];
+then
+  source venv/bin/activate
+  bash -c "find . \( -name venv -prune \) -o \( -name google-cloud-sdk -prune \) -o -name "*.py" -print | xargs pylint" >> pylintOut.txt
+  deactivate
+elif [[ "$1" == "deploy" ]];
+then
+  source venv/bin/activate
+  ./google-cloud-sdk/bin/gcloud app deploy ./package_moduleshelf/app.yaml
+  deactivate
+fi

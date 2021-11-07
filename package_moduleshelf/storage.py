@@ -52,8 +52,7 @@ def upload_file(file_stream, filename, content_type):
     _check_extension(filename, current_app.config['ALLOWED_EXTENSIONS'])
     filename = _safe_filename(filename)
 
-    bucketname = os.getenv('GOOGLE_STORAGE_BUCKET') or os.getenv(
-        'GOOGLE_CLOUD_PROJECT') + '_bucket'
+    bucketname = os.getenv('GOOGLE_STORAGE_BUCKET')
 
     # [START package_moduleshelf_cloud_storage_client]
     client = storage.Client()

@@ -87,9 +87,9 @@ MONGO_URI = 'mongodb://user:password@host:27017/database'
 #
 # You can adjust the max content length and allow extensions settings to allow
 # larger or more varied file types if desired.
-CLOUD_STORAGE_BUCKET = 'your-bucket-name'
-MAX_CONTENT_LENGTH = 8 * 1024 * 1024
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+CLOUD_STORAGE_BUCKET = 'ece461-p2-t3-files'
+MAX_CONTENT_LENGTH = sys.maxint
+ALLOWED_EXTENSIONS = set(['zip'])
 
 # OAuth2 configuration.
 # This can be generated from the Google Developers Console at
