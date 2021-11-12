@@ -1,0 +1,81 @@
+Only in .: .DS_Store
+Only in ./.github: .keep
+Only in ./.github: workflows
+diff --exclude='*.txt' --exclude=.git -r ./.gitignore ../getting-started-python/.gitignore
+35a36
+> 
+Only in .: ZipUnzip.py
+Only in .: doc
+Only in .: google-cloud-sdk
+Only in .: google-cloud-sdk-363.0.0-linux-x86_64.tar.gz
+diff --exclude='*.txt' --exclude=.git -r ./optional-kubernetes-engine/config.py ../getting-started-python/optional-kubernetes-engine/config.py
+92c92
+< ALLOWED_EXTENSIONS = set(['zip'])
+---
+> ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+Only in ./package_moduleshelf: .gcloudignore
+diff --exclude='*.txt' --exclude=.git -r ./package_moduleshelf/main.py ../getting-started-python/package_moduleshelf/main.py
+51c51
+<     ALLOWED_EXTENSIONS=set(['zip'])
+---
+>     ALLOWED_EXTENSIONS=set(['png', 'jpg', 'jpeg', 'gif'])
+67c67
+<     start_after = request.args.get('start_after', default=1)
+---
+>     start_after = request.args.get('start_after', None)
+diff --exclude='*.txt' --exclude=.git -r ./package_moduleshelf/storage.py ../getting-started-python/package_moduleshelf/storage.py
+55c55,56
+<     bucketname = os.getenv('GOOGLE_STORAGE_BUCKET')
+---
+>     bucketname = os.getenv('GOOGLE_STORAGE_BUCKET') or os.getenv(
+>         'GOOGLE_CLOUD_PROJECT') + '_bucket'
+diff --exclude='*.txt' --exclude=.git -r ./package_moduleshelf/templates/list.html ../getting-started-python/package_moduleshelf/templates/list.html
+34,48c34,48
+<   <div class="media">
+<     <a href="/package_modules/{{package_module.id}}">
+<       <div class="media-left">
+<         {% if package_module.imageUrl %}
+<           <img src="{{package_module.imageUrl}}">
+<         {% else %}
+<           <img src="https://placekitten.com/g/128/192">
+<         {% endif %}
+<       </div>
+<       <div class="media-body">
+<         <h4>{{package_module.name}}</h4>
+<         <p>{{package_module.user}}</p>
+<       </div>
+<     </a>
+<   </div>
+---
+> <div class="media">
+>   <a href="/package_modules/{{package_module.id}}">
+>     <div class="media-left">
+>       {% if package_module.imageUrl %}
+>         <img src="{{package_module.imageUrl}}">
+>       {% else %}
+>         <img src="https://placekitten.com/g/128/192">
+>       {% endif %}
+>     </div>
+>     <div class="media-body">
+>       <h4>{{package_module.name}}</h4>
+>       <p>{{package_module.user}}</p>
+>     </div>
+>   </a>
+> </div>
+50c50
+<   <p>No package_modules found</p>
+---
+> <p>No package_modules found</p>
+61c61
+< {% endblock %}
+\ No newline at end of file
+---
+> {% endblock %}
+Only in .: project1given
+diff --exclude='*.txt' --exclude=.git -r ./run ../getting-started-python/run
+39c39
+< fi
+---
+> fi
+\ No newline at end of file
+Only in .: venv

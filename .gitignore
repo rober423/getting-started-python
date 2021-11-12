@@ -33,3 +33,14 @@ lib/
 /client-secret.json
 /service-account.json
 /config.py
+
+.DS_Store
+*.class
+.vscode
+.idea
+.env
+*.pyc
+__pycache__
+google-cloud-sdk/
+venv/
+*.tar.*

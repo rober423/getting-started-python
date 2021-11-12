@@ -47,7 +47,7 @@ def upload_image_file(img):
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY='secret',
-    MAX_CONTENT_LENGTH=8 * 1024 * 1024,
+    MAX_CONTENT_LENGTH=sys.maxint,
     ALLOWED_EXTENSIONS=set(['png', 'jpg', 'jpeg', 'gif'])
 )
 
